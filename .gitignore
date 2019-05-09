@@ -11,3 +11,8 @@ HELP.md
 *.ipr
 /out/
 
+
+# Compiled class file
+*.class
+# Log file
+*.log
