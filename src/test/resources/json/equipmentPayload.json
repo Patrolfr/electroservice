@@ -1,0 +1,13 @@
+{
+  "name": "TestEquipment",
+  "category": "tv",
+  "serviceCode": "tst-121",
+  "parameters": {
+    "testkey1": "testvalue1",
+    "testkey2": "testvalue2"
+  },
+  "comments": [
+    "testcomment1"
+  ],
+  "serviceStatus": "WORKING"
+}
