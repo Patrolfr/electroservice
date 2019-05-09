@@ -1,4 +1,4 @@
-package komo.fraczek.electronicsservice;
+package komo.fraczek.electronicsservice.service;
 
 import komo.fraczek.electronicsservice.domain.Category;
 import komo.fraczek.electronicsservice.domain.Equipment;

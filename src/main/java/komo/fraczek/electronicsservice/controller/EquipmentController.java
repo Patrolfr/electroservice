@@ -1,7 +1,7 @@
 package komo.fraczek.electronicsservice.controller;
 
 
-import komo.fraczek.electronicsservice.EquipmentService;
+import komo.fraczek.electronicsservice.service.EquipmentService;
 import komo.fraczek.electronicsservice.domain.Equipment;
 import komo.fraczek.electronicsservice.domain.ServiceStatus;
 import komo.fraczek.electronicsservice.domain.dto.CommentsPayload;

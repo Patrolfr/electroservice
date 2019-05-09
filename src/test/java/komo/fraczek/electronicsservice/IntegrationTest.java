@@ -2,6 +2,7 @@ package komo.fraczek.electronicsservice;
 
 import com.google.common.io.Resources;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
