@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PublicController {
 
     @RequestMapping("/publiccontroller")
-    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    @ResponseStatus(value = HttpStatus.CHECKPOINT)
     public String publicEndopoint(){
-        return "publiccontroller endpoint.";
+        return "notSecuredTestEndpoint";
     }
 }

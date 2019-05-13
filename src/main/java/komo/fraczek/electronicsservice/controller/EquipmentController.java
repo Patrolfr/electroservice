@@ -68,9 +68,9 @@ public class EquipmentController {
         return equipmentService.fetchByCategoryAndWrap(category);
     }
 
-    @RequestMapping("/public")
-    @ResponseStatus(value = HttpStatus.CHECKPOINT)
-    public String publicEndopoint(){
-        return "public endpoint.";
-    }
+//    @RequestMapping("/public")
+//    @ResponseStatus(value = HttpStatus.CHECKPOINT)
+//    public String publicEndopoint(){
+//        return "public endpoint.";
+//    }
 }

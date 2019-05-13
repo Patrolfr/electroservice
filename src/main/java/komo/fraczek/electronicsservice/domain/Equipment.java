@@ -34,7 +34,7 @@ public class Equipment {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Parameter> parameters;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="comments", joinColumns=@JoinColumn(name="equipment_id"))
     @Embedded
     @Column(name="comments")

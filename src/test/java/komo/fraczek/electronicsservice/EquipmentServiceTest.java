@@ -139,7 +139,7 @@ public class EquipmentServiceTest {
 
         assertEquals(equipmentFake.getComments().size(), 0);
         // TODO
-//        equipmentService.appendComments(equipmentFake.getServiceCode(), commentsPayload);
+//        equipmentService.appendComments(equipmentFake.getServiceCode(), commentsPayload.json);
 //        assertEquals(equipmentFake.getComments().size(), createCommentsPayloadFake().getComments().size());
     }
 
