@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -62,7 +63,7 @@ public class EquipmentIntegrationTest {
     public void create_shouldCreateEquipment() throws Exception {
         String equipmentPayload = getRequestData("equipmentPayload.json");
 
-        String responseContentAsString = doRequest(HttpMethod.POST, "/equipments/", equipmentPayload, status().isCreated());
+        String responseContentAsString = doRequestAndVerifyStatus(HttpMethod.POST, "/equipments/", equipmentPayload, status().isCreated());
         EquipmentResponse equipmentResponse = objectMapper.readValue(responseContentAsString, EquipmentResponse.class);
 
         Optional<Equipment> byServiceCode = equipmentRepository.findByServiceCode(equipmentResponse.getServiceCode());
@@ -75,12 +76,20 @@ public class EquipmentIntegrationTest {
     }
 
     @Test
+    public void retrieveAll_shouldReturn8Equipments() throws Exception{
+        String responseContentAsString = doRequestAndVerifyStatus(HttpMethod.GET, "/equipments/", "", status().isOk());
+
+        EquipmentResponse[] equipmentResponses = objectMapper.readValue(responseContentAsString, EquipmentResponse[].class);
+        assertEquals(8, equipmentResponses.length);
+    }
+
+    @Test
     public void delete_shouldDeleteEquipment() throws Exception{
         String testCode = "XYZ-123";
 
         assertTrue(equipmentRepository.existsByServiceCode(testCode));
 
-        String responseContentAsString = doRequest(HttpMethod.DELETE, "/equipments/" + testCode, "", status().isNoContent());
+        String responseContentAsString = doRequestAndVerifyStatus(HttpMethod.DELETE, "/equipments/" + testCode, "", status().isNoContent());
         assertFalse(equipmentRepository.existsByServiceCode(testCode));
     }
 
@@ -90,7 +99,7 @@ public class EquipmentIntegrationTest {
         String commentsPayloadString = getRequestData("commentsPayload.json");
         CommentsPayload commentsPayload = objectMapper.readValue(commentsPayloadString, CommentsPayload.class);
 
-        String responseContentAsString = doRequest(HttpMethod.PUT, "/equipments/" + testCode + "/comment", commentsPayloadString, status().isOk());
+        String responseContentAsString = doRequestAndVerifyStatus(HttpMethod.PUT, "/equipments/" + testCode + "/comment", commentsPayloadString, status().isOk());
 
         EquipmentResponse equipmentResponse = objectMapper.readValue(responseContentAsString, EquipmentResponse.class);
         assertTrue(equipmentResponse.getComments().containsAll(commentsPayload.getComments()));
@@ -106,7 +115,7 @@ public class EquipmentIntegrationTest {
 
     @Test
     public void retrieveByCategory_shouldRetrieve4Equipments_forCategory_tv() throws Exception{
-        String responseContentAsString = doRequest(HttpMethod.GET, "/equipments/category/phone/", "", status().isOk());
+        String responseContentAsString = doRequestAndVerifyStatus(HttpMethod.GET, "/equipments/category/phone/", "", status().isOk());
         EquipmentResponse[] equipmentResponses = objectMapper.readValue(responseContentAsString, EquipmentResponse[].class);
 
         assertEquals(4, equipmentResponses.length);
@@ -121,7 +130,7 @@ public class EquipmentIntegrationTest {
     }
 
 
-    private String doRequest(HttpMethod httpMethod, String url, String data, ResultMatcher exceptedStatus) throws Exception {
+    private String doRequestAndVerifyStatus(HttpMethod httpMethod, String url, String data, ResultMatcher exceptedStatus) throws Exception {
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.request(httpMethod, url);
         requestBuilder.content(data).headers(getRequestHeaders());
