@@ -8,6 +8,8 @@ import komo.fraczek.electronicsservice.domain.ServiceStatus;
 import komo.fraczek.electronicsservice.domain.dto.CommentsPayload;
 import komo.fraczek.electronicsservice.domain.dto.EquipmentPayload;
 import komo.fraczek.electronicsservice.domain.dto.EquipmentResponse;
+import komo.fraczek.electronicsservice.exception.CategoryNotFoundException;
+import komo.fraczek.electronicsservice.exception.CodeNotFoundException;
 import komo.fraczek.electronicsservice.repository.CategoryRepository;
 import komo.fraczek.electronicsservice.repository.EquipmentRepository;
 import komo.fraczek.electronicsservice.service.EquipmentService;
@@ -16,22 +18,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
 
-//@RunWith(MockitoJUnitRunner.class)
-//@Ignore
 public class EquipmentServiceTest {
 
     private static final Logger logger = LoggerFactory.getLogger(EquipmentServiceTest.class);
@@ -95,13 +88,14 @@ public class EquipmentServiceTest {
         assertEquals(equipmentFake, equipmentFetched);
     }
 
-    @Test
+    @Test(expected = CodeNotFoundException.class)
     public void when_fetchByCode_throws_CodeNotFoundException(){
         Equipment equipmentFake = createEquipmentFake();
         when(equipmentRepositoryMock.findByServiceCode(equipmentFake.getServiceCode())).thenReturn(Optional.empty());
 
-        // FIXME: 09/05/19
+        // FIXME: 09/05/19 --fixed moved to junit4
 //        assertThrows(CodeNotFoundException.class, () -> equipmentService.fetchByCode(equipmentFake.getServiceCode()));
+        equipmentService.fetchByCode(equipmentFake.getServiceCode());
     }
 
     @Test
@@ -116,7 +110,7 @@ public class EquipmentServiceTest {
         assertEquals(equipmentFake, equipmentReturned);
     }
 
-    @Test
+    @Test(expected = CodeNotFoundException.class)
     public void when_changeStatus_throws_CodeNotFoundException(){
         Equipment equipmentFake = createEquipmentFake();
         when(equipmentRepositoryMock.findByServiceCode(equipmentFake.getServiceCode())).thenReturn(Optional.empty());
@@ -124,9 +118,10 @@ public class EquipmentServiceTest {
 
         // FIXME: 09/05/19
 //        assertThrows(CodeNotFoundException.class, () -> equipmentService.changeStatus(equipmentFake.getServiceCode(),ServiceStatus.BROKEN));
+        equipmentService.changeStatus(equipmentFake.getServiceCode(),ServiceStatus.BROKEN);
     }
 
-    //FIXME test failure, appendComments rly works..
+
     @Test
     public void when_appendComments_returns_EquipmentWithAppendedComments(){
         Equipment equipmentFake = createEquipmentFake();
@@ -134,15 +129,14 @@ public class EquipmentServiceTest {
         when(equipmentRepositoryMock.findByServiceCode(equipmentFake.getServiceCode())).thenReturn(Optional.of(equipmentFake));
         when(equipmentRepositoryMock.save(equipmentFake)).thenReturn(equipmentFake);
 
-        logger.debug(equipmentFake.toString());
+        logger.debug("equipmentFake.toString(): " + equipmentFake.toString());
         logger.debug(commentsPayload.toString());
 
         assertEquals(equipmentFake.getComments().size(), 0);
-        // TODO
-//        equipmentService.appendComments(equipmentFake.getServiceCode(), commentsPayload.json);
-//        assertEquals(equipmentFake.getComments().size(), createCommentsPayloadFake().getComments().size());
-    }
 
+        Equipment equipment = equipmentService.appendComments(equipmentFake.getServiceCode(), commentsPayload);
+        assertEquals(createCommentsPayloadFake().getComments().size(), equipmentFake.getComments().size());
+    }
 
     @Test
     public void when_unwrapPayload_returns_Equipment(){
@@ -156,12 +150,13 @@ public class EquipmentServiceTest {
         assertEquals(createEquipmentPayloadFake().getServiceStatus(), equipmentFakeUnwrapped.getServiceStatus());
     }
 
-    @Test
+    @Test(expected = CategoryNotFoundException.class)
     public void when_unwrapPayload_throws_CategoryNotFoundException(){
         EquipmentPayload equipmentPayloadFake = createEquipmentPayloadFake();
         when(categoryRepositoryMock.findByName(equipmentPayloadFake.getCategory())).thenReturn(Optional.empty());
 // FIXME: 09/05/19
 //        assertThrows(CategoryNotFoundException.class, () -> equipmentService.unwrapPayload(equipmentPayloadFake));
+        equipmentService.unwrapPayload(equipmentPayloadFake);
     }
 
 
@@ -170,7 +165,7 @@ public class EquipmentServiceTest {
         return EquipmentPayload.builder().name("Equipment FakeName")
                 .serviceStatus(ServiceStatus.valueOf("WORKING"))
                 .category("categoryStringFake")
-                .comments(Arrays.asList("CommentFake1", "CommentFake2"))
+                .comments(new ArrayList<String>(Arrays.asList("CommentFake1", "CommentFake2")))
                 .parameters(createParametersFake())
                 .serviceStatus(ServiceStatus.WORKING)
                 .build();
@@ -182,7 +177,7 @@ public class EquipmentServiceTest {
                                   .name(name)
                                   .serviceCode("XXX-123")
                                   .serviceStatus(ServiceStatus.WORKING)
-                                  .comments(Arrays.asList())
+                                  .comments(new ArrayList<String>(Arrays.asList()))
                                   .build();
     }
 
@@ -192,7 +187,7 @@ public class EquipmentServiceTest {
                                   .name("EquipmentFakeName")
                                   .serviceCode("XXX-123")
                                   .serviceStatus(ServiceStatus.WORKING)
-                                   .comments(Arrays.asList())
+                                   .comments(new ArrayList<String>(Arrays.asList()))
                                   .build();
     }
 
