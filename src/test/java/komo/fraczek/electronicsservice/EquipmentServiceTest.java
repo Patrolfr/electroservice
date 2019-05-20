@@ -121,7 +121,6 @@ public class EquipmentServiceTest {
         equipmentService.changeStatus(equipmentFake.getServiceCode(),ServiceStatus.BROKEN);
     }
 
-
     @Test
     public void when_appendComments_returns_EquipmentWithAppendedComments(){
         Equipment equipmentFake = createEquipmentFake();

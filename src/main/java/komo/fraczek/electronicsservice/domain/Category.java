@@ -15,10 +15,11 @@ import javax.persistence.*;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Getter
     private String name;
 
 }
+

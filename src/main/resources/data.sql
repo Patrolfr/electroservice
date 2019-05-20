@@ -11,7 +11,7 @@ insert into equipments (category_id, name, service_code, service_status, id) val
 insert into equipments (category_id, name, service_code, service_status, id) values (2, 'samsung view', 'TVC-123','WORKING', 1005);
 insert into equipments (category_id, name, service_code, service_status, id) values (2, 'phillips4k', 'TVZ-123','WORKING', 1006);
 insert into equipments (category_id, name, service_code, service_status, id) values (2, 'lg plasma 2701', 'TVW-532','WORKING', 1007);
-insert into equipments (category_id, name, service_code, service_status, id) values (2, 'stary kineskop', 'TVg-909','IN_SERVICE', 1008);
+insert into equipments (category_id, name, service_code, service_status, id) values (2, 'stary kineskop', 'TVg-909','IN_SERVICE', 6);
 
 insert into parameters values(51,'headphones','yes');
 insert into parameters values(52,'resolution','1920x1080');

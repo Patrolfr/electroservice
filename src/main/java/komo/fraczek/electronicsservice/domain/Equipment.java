@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity
 @Table(name = "equipments")
 @Getter
