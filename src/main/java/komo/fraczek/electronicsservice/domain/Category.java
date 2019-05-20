@@ -20,6 +20,5 @@ public class Category {
 
     @Getter
     private String name;
-
 }
 
