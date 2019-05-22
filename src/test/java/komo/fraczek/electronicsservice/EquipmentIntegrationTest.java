@@ -7,6 +7,7 @@ import komo.fraczek.electronicsservice.domain.Equipment;
 import komo.fraczek.electronicsservice.domain.dto.CommentsPayload;
 import komo.fraczek.electronicsservice.domain.dto.EquipmentResponse;
 import komo.fraczek.electronicsservice.repository.EquipmentRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -34,6 +35,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Ignore
 @RunWith(SpringRunner.class)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
