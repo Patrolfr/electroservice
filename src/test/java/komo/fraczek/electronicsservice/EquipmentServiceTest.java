@@ -128,9 +128,6 @@ public class EquipmentServiceTest {
         when(equipmentRepositoryMock.findByServiceCode(equipmentFake.getServiceCode())).thenReturn(Optional.of(equipmentFake));
         when(equipmentRepositoryMock.save(equipmentFake)).thenReturn(equipmentFake);
 
-        logger.debug("equipmentFake.toString(): " + equipmentFake.toString());
-        logger.debug(commentsPayload.toString());
-
         assertEquals(equipmentFake.getComments().size(), 0);
 
         Equipment equipment = equipmentService.appendComments(equipmentFake.getServiceCode(), commentsPayload);

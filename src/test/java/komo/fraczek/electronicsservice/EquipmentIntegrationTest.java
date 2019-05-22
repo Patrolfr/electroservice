@@ -35,7 +35,6 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Ignore
 @RunWith(SpringRunner.class)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

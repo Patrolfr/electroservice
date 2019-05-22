@@ -1,6 +1,10 @@
 # electroservice
 Electronics service moved to gradle.
 
+[![Build Status](https://travis-ci.com/Patrolfr/electroservice.svg?branch=master)](https://travis-ci.com/Patrolfr/electroservice)
+
+https://travis-ci.com/Patrolfr/electroservice.svg?branch=master
+
 ### Task
 Zadanie polega na przygotowaniu modułu serwisowania sprzętu elektronicznego.
 ###### Wytyczne:
